@@ -1,10 +1,33 @@
-<!DOCTYPE html>
+const fs = require('fs');
+const path = require('path');
+
+const TOOLS_URL = 'https://ishutools.vercel.app/';
+const pages = [
+  { folder: 'ABOUT', title: 'About', icon: '👤', desc: 'Learn more about Ishu Kumar — the developer, creator, and builder behind this platform.', navActive: 'About' },
+  { folder: 'BEU', title: 'BEU Portal', icon: '🎓', desc: 'Bihar Engineering University resources, results, syllabus, and study materials.', navActive: '' },
+  { folder: 'BLOG', title: 'Blog', icon: '📝', desc: 'Insightful articles on tech, programming, career advice, and student life.', navActive: 'Blog' },
+  { folder: 'COLLEGE DUKAN', title: 'College Dukan', icon: '🏪', desc: 'Your one-stop student marketplace for notes, books, and campus essentials.', navActive: '' },
+  { folder: 'CONTACT', title: 'Contact', icon: '📞', desc: 'Get in touch with Ishu Kumar for collaborations, queries, or just to say hello.', navActive: 'Contact' },
+  { folder: 'CV', title: 'CV Builder', icon: '📄', desc: 'Create professional resumes and CVs with modern, ATS-friendly templates.', navActive: '' },
+  { folder: 'GAMES', title: 'Games', icon: '🎮', desc: 'Play fun browser games to relax between study sessions. No downloads needed.', navActive: '' },
+  { folder: 'HOME-PAGE', title: 'Home', icon: '🏠', desc: 'Welcome to ISHU — your digital hub for tools, resources, and more.', navActive: 'Home' },
+  { folder: 'JOBS', title: 'Jobs & Careers', icon: '💼', desc: 'Find internships, fresher jobs, and career opportunities in tech and beyond.', navActive: '' },
+  { folder: 'NEWS', title: 'News', icon: '📰', desc: 'Stay updated with the latest tech, education, and industry news curated for you.', navActive: '' },
+  { folder: 'RESOURCE', title: 'Resources', icon: '📚', desc: 'Curated learning resources, notes, PDFs, and reference materials for students.', navActive: '' },
+  { folder: 'RESULT', title: 'Results', icon: '📊', desc: 'Check your exam results quickly with our fast and reliable result checker.', navActive: '' },
+  { folder: 'TEST', title: 'Test', icon: '🧪', desc: 'Practice tests, mock exams, and quizzes to prepare for your upcoming exams.', navActive: '' },
+];
+
+function gen(p) {
+  const a = (name) => p.navActive === name ? ' class="active"' : '';
+  const ma = (name) => p.navActive === name ? ' active' : '';
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISHU - News | Coming Soon</title>
-    <meta name="description" content="Stay updated with the latest tech, education, and industry news curated for you.">
+    <title>ISHU - ${p.title} | Coming Soon</title>
+    <meta name="description" content="${p.desc}">
     <meta name="author" content="Ishu Kumar">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,10 +51,10 @@
         <div class="nav-container">
             <a href="/" class="nav-logo">ISHU</a>
             <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/ABOUT/">About</a></li>
-                <li><a href="/BLOG/">Blog</a></li>
-                <li><a href="/CONTACT/">Contact</a></li>
+                <li><a href="/"${a('Home')}>Home</a></li>
+                <li><a href="/ABOUT/"${a('About')}>About</a></li>
+                <li><a href="/BLOG/"${a('Blog')}>Blog</a></li>
+                <li><a href="/CONTACT/"${a('Contact')}>Contact</a></li>
                 <li class="nav-dropdown" id="navDropdown">
                     <button class="nav-dropdown-btn" onclick="toggleDropdown(event)">
                         More <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -57,7 +80,7 @@
                     <a href="https://x.com/ISHU_IITP" target="_blank" rel="noopener" aria-label="X" class="nav-social-icon"><svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
                     <a href="https://www.youtube.com/@ishu-fun" target="_blank" rel="noopener" aria-label="YouTube" class="nav-social-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></a>
                 </div>
-                <a href="https://ishutools.vercel.app/" class="nav-tools-btn">⚡ Tools</a>
+                <a href="${TOOLS_URL}" class="nav-tools-btn">⚡ Tools</a>
             </div>
             <div class="hamburger" id="hamburger" onclick="toggleMenu()">
                 <span></span><span></span><span></span>
@@ -69,10 +92,10 @@
         <div class="mobile-menu-inner">
             <div class="mobile-section">
                 <div class="mobile-section-label">Navigation</div>
-                <a href="/" class="mobile-link"><span class="mobile-link-icon">🏠</span> Home</a>
-                <a href="/ABOUT/" class="mobile-link"><span class="mobile-link-icon">👤</span> About</a>
-                <a href="/BLOG/" class="mobile-link"><span class="mobile-link-icon">📝</span> Blog</a>
-                <a href="/CONTACT/" class="mobile-link"><span class="mobile-link-icon">📞</span> Contact</a>
+                <a href="/" class="mobile-link${ma('Home')}"><span class="mobile-link-icon">🏠</span> Home</a>
+                <a href="/ABOUT/" class="mobile-link${ma('About')}"><span class="mobile-link-icon">👤</span> About</a>
+                <a href="/BLOG/" class="mobile-link${ma('Blog')}"><span class="mobile-link-icon">📝</span> Blog</a>
+                <a href="/CONTACT/" class="mobile-link${ma('Contact')}"><span class="mobile-link-icon">📞</span> Contact</a>
             </div>
             <div class="mobile-section">
                 <div class="mobile-section-label">Platform</div>
@@ -88,7 +111,7 @@
                     <a href="/TEST/" class="mobile-grid-item"><span>🧪</span> Test</a>
                 </div>
             </div>
-            <a href="https://ishutools.vercel.app/" class="mobile-tools-btn">⚡ Explore 1200+ Tools</a>
+            <a href="${TOOLS_URL}" class="mobile-tools-btn">⚡ Explore 1200+ Tools</a>
             <div class="mobile-social">
                 <a href="https://www.linkedin.com/in/ishu-kumar-5a0940281/" target="_blank" rel="noopener" class="mobile-social-icon">in</a>
                 <a href="https://www.instagram.com/ishukr10" target="_blank" rel="noopener" class="mobile-social-icon">📷</a>
@@ -101,10 +124,10 @@
     <main class="hero" id="hero">
         <div class="hero-inner" style="text-align:center;">
             <div class="badge"><span class="pulse-dot"></span> Under Development</div>
-            <div class="page-icon">📰</div>
-            <h1><span class="text-gradient">News</span></h1>
+            <div class="page-icon">${p.icon}</div>
+            <h1><span class="text-gradient">${p.title}</span></h1>
             <p class="page-subtitle">Coming Soon</p>
-            <p class="page-desc">Stay updated with the latest tech, education, and industry news curated for you.</p>
+            <p class="page-desc">${p.desc}</p>
             <a href="/" class="back-home">← Back to Home</a>
         </div>
     </main>
@@ -114,7 +137,7 @@
             <a href="/">Home</a>
             <a href="/ABOUT/">About</a>
             <a href="/CONTACT/">Contact</a>
-            <a href="https://ishutools.vercel.app/">Tools</a>
+            <a href="${TOOLS_URL}">Tools</a>
         </div>
         <p class="footer-text">© 2026 ISHU. Crafted with ❤️ by Ishu Kumar. All rights reserved.</p>
     </footer>
@@ -131,4 +154,15 @@
         });
     </script>
 </body>
-</html>
+</html>`;
+}
+
+const basePath = __dirname;
+pages.forEach(p => {
+  const dir = path.join(basePath, p.folder);
+  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+  const filePath = path.join(dir, 'index.html');
+  fs.writeFileSync(filePath, gen(p), 'utf8');
+  console.log('Generated:', filePath);
+});
+console.log('\nAll 13 pages generated with new navbar!');

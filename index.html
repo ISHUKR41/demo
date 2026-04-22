@@ -1,202 +1,75 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ISHU - Home</title>
-    <meta name="description" content="Welcome to ISHU - Your one-stop destination for tools, resources, games, news, and more.">
+    <title>ISHU - Developer, Creator & Builder | Tools, Resources & More</title>
+    <meta name="description" content="Ishu Kumar's digital hub â€” 1200+ free tools, games, resources, news, jobs & more. Built for students, developers & creators.">
+    <meta name="keywords" content="Ishu Kumar, ISHU Tools, free online tools, student tools, developer tools, PDF tools, image tools">
+    <meta name="author" content="Ishu Kumar">
+    <meta property="og:title" content="ISHU - Developer, Creator & Builder">
+    <meta property="og:description" content="1200+ free tools, games, resources & more by Ishu Kumar.">
+    <meta property="og:type" content="website">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: #050a18;
-            color: #e2e8f0;
-            min-height: 100vh;
-            overflow-x: hidden;
-        }
-
-        /* Animated Background */
-        .bg-animation {
-            position: fixed; inset: 0; z-index: 0; overflow: hidden;
-        }
-        .bg-animation .orb {
-            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; animation: float 20s infinite ease-in-out;
-        }
-        .bg-animation .orb:nth-child(1) { width: 600px; height: 600px; background: radial-gradient(circle, #6366f1, transparent); top: -10%; left: -10%; animation-delay: 0s; }
-        .bg-animation .orb:nth-child(2) { width: 500px; height: 500px; background: radial-gradient(circle, #06b6d4, transparent); bottom: -10%; right: -10%; animation-delay: -7s; }
-        .bg-animation .orb:nth-child(3) { width: 400px; height: 400px; background: radial-gradient(circle, #8b5cf6, transparent); top: 50%; left: 50%; transform: translate(-50%, -50%); animation-delay: -14s; }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            25% { transform: translate(50px, -50px) scale(1.1); }
-            50% { transform: translate(-30px, 60px) scale(0.95); }
-            75% { transform: translate(40px, 30px) scale(1.05); }
-        }
-
-        /* Navbar */
-        .navbar {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-            background: rgba(5, 10, 24, 0.8); backdrop-filter: blur(20px) saturate(180%);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-            transition: all 0.3s ease;
-        }
-        .navbar.scrolled { background: rgba(5, 10, 24, 0.95); box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3); }
-        .nav-container {
-            max-width: 1400px; margin: 0 auto;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 1.5rem; height: 64px;
-        }
-        .nav-logo {
-            font-size: 1.5rem; font-weight: 800; text-decoration: none;
-            background: linear-gradient(135deg, #6366f1, #06b6d4);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: -0.5px;
-        }
-        .nav-links {
-            display: flex; align-items: center; gap: 0.25rem;
-            list-style: none;
-        }
-        .nav-links a {
-            text-decoration: none; color: #94a3b8;
-            font-size: 0.8rem; font-weight: 500;
-            padding: 0.5rem 0.75rem; border-radius: 0.5rem;
-            transition: all 0.2s ease; white-space: nowrap;
-            position: relative;
-        }
-        .nav-links a:hover { color: #f1f5f9; background: rgba(255, 255, 255, 0.06); }
-        .nav-links a.active {
-            color: #c7d2fe; background: rgba(99, 102, 241, 0.15);
-        }
-        .nav-links a.tools-link {
-            background: linear-gradient(135deg, #6366f1, #06b6d4);
-            color: #fff; font-weight: 600;
-        }
-        .nav-links a.tools-link:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        /* Hamburger */
-        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; z-index: 1001; padding: 5px; }
-        .hamburger span { display: block; width: 24px; height: 2px; background: #e2e8f0; border-radius: 2px; transition: all 0.3s ease; }
-        .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
-        .hamburger.active span:nth-child(2) { opacity: 0; }
-        .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            display: none; position: fixed; inset: 0; z-index: 999;
-            background: rgba(5, 10, 24, 0.98); backdrop-filter: blur(20px);
-            flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
-            opacity: 0; transform: translateY(-20px); transition: all 0.3s ease;
-        }
-        .mobile-menu.active { display: flex; opacity: 1; transform: translateY(0); }
-        .mobile-menu a {
-            text-decoration: none; color: #94a3b8; font-size: 1.1rem; font-weight: 500;
-            padding: 0.75rem 2rem; border-radius: 0.75rem; transition: all 0.2s ease;
-            width: 80%; max-width: 300px; text-align: center;
-        }
-        .mobile-menu a:hover, .mobile-menu a.active { color: #f1f5f9; background: rgba(255, 255, 255, 0.06); }
-        .mobile-menu a.tools-link {
-            background: linear-gradient(135deg, #6366f1, #06b6d4);
-            color: #fff; font-weight: 600; margin-top: 0.5rem;
-        }
-
-        /* Hero */
-        .hero {
-            position: relative; z-index: 1;
-            min-height: 100vh; display: flex; align-items: center; justify-content: center;
-            padding: 6rem 1.5rem 3rem;
-        }
-        .hero-content { text-align: center; max-width: 700px; }
-        .badge {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.5rem 1.25rem; border-radius: 100px;
-            background: rgba(99, 102, 241, 0.1); border: 1px solid rgba(99, 102, 241, 0.2);
-            font-size: 0.8rem; font-weight: 500; color: #a5b4fc;
-            margin-bottom: 2rem; animation: fadeUp 0.8s ease forwards;
-        }
-        .badge .dot { width: 6px; height: 6px; background: #6366f1; border-radius: 50%; animation: pulse 2s infinite; }
-
-        .hero h1 {
-            font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900;
-            line-height: 1.1; letter-spacing: -2px; margin-bottom: 1.5rem;
-            animation: fadeUp 0.8s ease 0.1s forwards; opacity: 0;
-        }
-        .hero h1 .gradient {
-            background: linear-gradient(135deg, #6366f1 0%, #06b6d4 50%, #6366f1 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shimmer 3s linear infinite;
-        }
-        @keyframes shimmer { to { background-position: 200% center; } }
-
-        .hero p {
-            font-size: clamp(1rem, 2vw, 1.25rem); color: #64748b;
-            line-height: 1.7; max-width: 500px; margin: 0 auto 2.5rem;
-            animation: fadeUp 0.8s ease 0.2s forwards; opacity: 0;
-        }
-
-        /* Decorative Cards */
-        .cards-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 1rem; max-width: 600px; margin: 0 auto;
-            animation: fadeUp 0.8s ease 0.3s forwards; opacity: 0;
-        }
-        .card {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);
-            border-radius: 1rem; padding: 1.5rem 1rem; text-align: center;
-            transition: all 0.3s ease; cursor: default;
-        }
-        .card:hover { background: rgba(255, 255, 255, 0.06); border-color: rgba(99, 102, 241, 0.3); transform: translateY(-4px); }
-        .card-icon { font-size: 1.75rem; margin-bottom: 0.75rem; }
-        .card-label { font-size: 0.75rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; }
-
-        @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-        /* Footer */
-        .footer {
-            position: relative; z-index: 1; text-align: center;
-            padding: 2rem; border-top: 1px solid rgba(255, 255, 255, 0.05);
-            font-size: 0.8rem; color: #475569;
-        }
-
-        @media (max-width: 900px) {
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Background Animation -->
-    <div class="bg-animation">
-        <div class="orb"></div>
-        <div class="orb"></div>
-        <div class="orb"></div>
+    <!-- Background Canvas -->
+    <div class="bg-canvas">
+        <div class="orb"></div><div class="orb"></div><div class="orb"></div>
+        <div class="grid-overlay"></div>
     </div>
 
     <!-- Navbar -->
     <nav class="navbar" id="navbar">
         <div class="nav-container">
             <a href="/" class="nav-logo">ISHU</a>
+
+            <!-- Desktop Nav -->
             <ul class="nav-links">
                 <li><a href="/" class="active">Home</a></li>
                 <li><a href="/ABOUT/">About</a></li>
-                <li><a href="/BEU/">BEU</a></li>
                 <li><a href="/BLOG/">Blog</a></li>
-                <li><a href="/COLLEGE%20DUKAN/">College Dukan</a></li>
                 <li><a href="/CONTACT/">Contact</a></li>
-                <li><a href="/CV/">CV</a></li>
-                <li><a href="/GAMES/">Games</a></li>
-                <li><a href="/JOBS/">Jobs</a></li>
-                <li><a href="/NEWS/">News</a></li>
-                <li><a href="/RESOURCE/">Resource</a></li>
-                <li><a href="/RESULT/">Result</a></li>
-                <li><a href="/TEST/">Test</a></li>
-                <li><a href="https://ishu-tools-page-taul.vercel.app/" class="tools-link">🔧 Tools</a></li>
+                <li class="nav-dropdown" id="navDropdown">
+                    <button class="nav-dropdown-btn" onclick="toggleDropdown(event)">
+                        More <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </button>
+                    <div class="mega-dropdown" id="megaDropdown">
+                        <div class="mega-grid">
+                            <a href="/BEU/" class="mega-item"><span class="mega-icon">&#127891;</span><div><div class="mega-title">BEU Portal</div><div class="mega-desc">University resources</div></div></a>
+                            <a href="/COLLEGE%20DUKAN/" class="mega-item"><span class="mega-icon">&#127978;</span><div><div class="mega-title">College Dukan</div><div class="mega-desc">Student marketplace</div></div></a>
+                            <a href="/CV/" class="mega-item"><span class="mega-icon">&#128196;</span><div><div class="mega-title">CV Builder</div><div class="mega-desc">Create resumes</div></div></a>
+                            <a href="/GAMES/" class="mega-item"><span class="mega-icon">&#127918;</span><div><div class="mega-title">Games</div><div class="mega-desc">Browser games</div></div></a>
+                            <a href="/JOBS/" class="mega-item"><span class="mega-icon">&#128188;</span><div><div class="mega-title">Jobs</div><div class="mega-desc">Career opportunities</div></div></a>
+                            <a href="/NEWS/" class="mega-item"><span class="mega-icon">&#128240;</span><div><div class="mega-title">News</div><div class="mega-desc">Latest updates</div></div></a>
+                            <a href="/RESOURCE/" class="mega-item"><span class="mega-icon">&#128218;</span><div><div class="mega-title">Resources</div><div class="mega-desc">Study materials</div></div></a>
+                            <a href="/RESULT/" class="mega-item"><span class="mega-icon">&#128202;</span><div><div class="mega-title">Results</div><div class="mega-desc">Exam results</div></div></a>
+                            <a href="/TEST/" class="mega-item"><span class="mega-icon">&#129514;</span><div><div class="mega-title">Test</div><div class="mega-desc">Practice tests</div></div></a>
+                        </div>
+                    </div>
+                </li>
             </ul>
+
+            <!-- Nav Right: Social + Tools CTA -->
+            <div class="nav-right">
+                <div class="nav-social">
+                    <a href="https://www.linkedin.com/in/ishu-kumar-5a0940281/" target="_blank" rel="noopener" aria-label="LinkedIn" class="nav-social-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    </a>
+                    <a href="https://x.com/ISHU_IITP" target="_blank" rel="noopener" aria-label="X" class="nav-social-icon">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="https://www.youtube.com/@ishu-fun" target="_blank" rel="noopener" aria-label="YouTube" class="nav-social-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                    </a>
+                </div>
+                <a href="https://ishutools.vercel.app/" class="nav-tools-btn">&#9889; Tools</a>
+            </div>
+
+            <!-- Hamburger -->
             <div class="hamburger" id="hamburger" onclick="toggleMenu()">
                 <span></span><span></span><span></span>
             </div>
@@ -205,47 +78,193 @@
 
     <!-- Mobile Menu -->
     <div class="mobile-menu" id="mobileMenu">
-        <a href="/" class="active">🏠 Home</a>
-        <a href="/ABOUT/">👤 About</a>
-        <a href="/BEU/">🎓 BEU</a>
-        <a href="/BLOG/">📝 Blog</a>
-        <a href="/COLLEGE%20DUKAN/">🏪 College Dukan</a>
-        <a href="/CONTACT/">📞 Contact</a>
-        <a href="/CV/">📄 CV</a>
-        <a href="/GAMES/">🎮 Games</a>
-        <a href="/JOBS/">💼 Jobs</a>
-        <a href="/NEWS/">📰 News</a>
-        <a href="/RESOURCE/">📚 Resource</a>
-        <a href="/RESULT/">📊 Result</a>
-        <a href="/TEST/">🧪 Test</a>
-        <a href="https://ishu-tools-page-taul.vercel.app/" class="tools-link">🔧 Tools</a>
+        <div class="mobile-menu-inner">
+            <div class="mobile-section">
+                <div class="mobile-section-label">Navigation</div>
+                <a href="/" class="mobile-link active"><span class="mobile-link-icon">&#127968;</span> Home</a>
+                <a href="/ABOUT/" class="mobile-link"><span class="mobile-link-icon">&#128100;</span> About</a>
+                <a href="/BLOG/" class="mobile-link"><span class="mobile-link-icon">&#128221;</span> Blog</a>
+                <a href="/CONTACT/" class="mobile-link"><span class="mobile-link-icon">&#128222;</span> Contact</a>
+            </div>
+            <div class="mobile-section">
+                <div class="mobile-section-label">Platform</div>
+                <div class="mobile-grid">
+                    <a href="/BEU/" class="mobile-grid-item"><span>&#127891;</span> BEU</a>
+                    <a href="/COLLEGE%20DUKAN/" class="mobile-grid-item"><span>&#127978;</span> Dukan</a>
+                    <a href="/CV/" class="mobile-grid-item"><span>&#128196;</span> CV</a>
+                    <a href="/GAMES/" class="mobile-grid-item"><span>&#127918;</span> Games</a>
+                    <a href="/JOBS/" class="mobile-grid-item"><span>&#128188;</span> Jobs</a>
+                    <a href="/NEWS/" class="mobile-grid-item"><span>&#128240;</span> News</a>
+                    <a href="/RESOURCE/" class="mobile-grid-item"><span>&#128218;</span> Resource</a>
+                    <a href="/RESULT/" class="mobile-grid-item"><span>&#128202;</span> Result</a>
+                    <a href="/TEST/" class="mobile-grid-item"><span>&#129514;</span> Test</a>
+                </div>
+            </div>
+            <a href="https://ishutools.vercel.app/" class="mobile-tools-btn">&#9889; Explore 1200+ Tools</a>
+            <div class="mobile-social">
+                <a href="https://www.linkedin.com/in/ishu-kumar-5a0940281/" target="_blank" rel="noopener" class="mobile-social-icon">in</a>
+                <a href="https://www.instagram.com/ishukr10" target="_blank" rel="noopener" class="mobile-social-icon">&#128247;</a>
+                <a href="https://www.youtube.com/@ishu-fun" target="_blank" rel="noopener" class="mobile-social-icon">&#9654;</a>
+                <a href="https://x.com/ISHU_IITP" target="_blank" rel="noopener" class="mobile-social-icon">&#120143;</a>
+            </div>
+        </div>
     </div>
 
     <!-- Hero -->
-    <main class="hero">
-        <div class="hero-content">
-            <div class="badge"><span class="dot"></span> Under Development</div>
-            <h1><span class="gradient">Coming Soon</span></h1>
-            <p>We're crafting something extraordinary. Our new platform is being built with care and precision to bring you an amazing experience.</p>
-            <div class="cards-grid">
-                <div class="card"><div class="card-icon">🔧</div><div class="card-label">Tools</div></div>
-                <div class="card"><div class="card-icon">🎮</div><div class="card-label">Games</div></div>
-                <div class="card"><div class="card-icon">📰</div><div class="card-label">News</div></div>
-                <div class="card"><div class="card-icon">💼</div><div class="card-label">Jobs</div></div>
+    <section class="hero" id="hero">
+        <div class="hero-inner">
+            <div class="badge"><span class="pulse-dot"></span> Building the Future</div>
+            <h1>Hi, I'm <span class="text-gradient">Ishu Kumar</span></h1>
+            <p class="subtitle">Developer, creator & builder crafting digital experiences with 1200+ free tools, resources, games & everything students need â€” all in one place.</p>
+            <div class="hero-cta">
+                <a href="https://ishutools.vercel.app/" class="btn-primary">&#9889; Explore 1200+ Tools</a>
+                <a href="/CONTACT/" class="btn-secondary">&#128172; Get in Touch</a>
             </div>
         </div>
-    </main>
+    </section>
 
-    <footer class="footer">&copy; 2026 ISHU. All rights reserved.</footer>
+    <!-- Stats -->
+    <div class="stats-bar">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number" data-count="1200" data-suffix="+">0+</div>
+                <div class="stat-label">Free Tools</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="15" data-suffix="+">0+</div>
+                <div class="stat-label">Sections</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="100" data-suffix="%">0%</div>
+                <div class="stat-label">Free Forever</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number" data-count="0" data-suffix="&#128526;">&#128526;</div>
+                <div class="stat-label">Sign-up Required</div>
+            </div>
+        </div>
+    </div>
 
-    <script>
-        function toggleMenu() {
-            document.getElementById('hamburger').classList.toggle('active');
-            document.getElementById('mobileMenu').classList.toggle('active');
-        }
-        window.addEventListener('scroll', () => {
-            document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
-        });
-    </script>
+    <!-- Tech Marquee Row 1 -->
+    <div class="marquee-section">
+        <div class="marquee-track">
+            <span class="marquee-item">React</span><span class="marquee-item">Next.js</span><span class="marquee-item">TypeScript</span><span class="marquee-item">Tailwind CSS</span><span class="marquee-item">Vite</span><span class="marquee-item">GSAP</span><span class="marquee-item">Framer Motion</span><span class="marquee-item">Three.js</span><span class="marquee-item">Vue.js</span><span class="marquee-item">Svelte</span><span class="marquee-item">Node.js</span><span class="marquee-item">Firebase</span><span class="marquee-item">Vercel</span><span class="marquee-item">Figma</span><span class="marquee-item">Shadcn UI</span><span class="marquee-item">Radix UI</span><span class="marquee-item">Chakra UI</span><span class="marquee-item">Material UI</span>
+            <span class="marquee-item">React</span><span class="marquee-item">Next.js</span><span class="marquee-item">TypeScript</span><span class="marquee-item">Tailwind CSS</span><span class="marquee-item">Vite</span><span class="marquee-item">GSAP</span><span class="marquee-item">Framer Motion</span><span class="marquee-item">Three.js</span><span class="marquee-item">Vue.js</span><span class="marquee-item">Svelte</span><span class="marquee-item">Node.js</span><span class="marquee-item">Firebase</span><span class="marquee-item">Vercel</span><span class="marquee-item">Figma</span><span class="marquee-item">Shadcn UI</span><span class="marquee-item">Radix UI</span><span class="marquee-item">Chakra UI</span><span class="marquee-item">Material UI</span>
+        </div>
+    </div>
+
+    <!-- Tech Marquee Row 2 (Reverse) -->
+    <div class="marquee-section" style="padding-top:0; margin-top:-1rem;">
+        <div class="marquee-track marquee-row-reverse">
+            <span class="marquee-item">Aceternity UI</span><span class="marquee-item">Magic UI</span><span class="marquee-item">DaisyUI</span><span class="marquee-item">Flowbite</span><span class="marquee-item">HeroUI</span><span class="marquee-item">Preline UI</span><span class="marquee-item">Tremor</span><span class="marquee-item">Park UI</span><span class="marquee-item">Headless UI</span><span class="marquee-item">Fluent UI</span><span class="marquee-item">Carbon Design</span><span class="marquee-item">Blueprint</span><span class="marquee-item">Ariakit</span><span class="marquee-item">Eldora UI</span><span class="marquee-item">Gluestack UI</span><span class="marquee-item">WebGL</span><span class="marquee-item">D3.js</span><span class="marquee-item">Supabase</span>
+            <span class="marquee-item">Aceternity UI</span><span class="marquee-item">Magic UI</span><span class="marquee-item">DaisyUI</span><span class="marquee-item">Flowbite</span><span class="marquee-item">HeroUI</span><span class="marquee-item">Preline UI</span><span class="marquee-item">Tremor</span><span class="marquee-item">Park UI</span><span class="marquee-item">Headless UI</span><span class="marquee-item">Fluent UI</span><span class="marquee-item">Carbon Design</span><span class="marquee-item">Blueprint</span><span class="marquee-item">Ariakit</span><span class="marquee-item">Eldora UI</span><span class="marquee-item">Gluestack UI</span><span class="marquee-item">WebGL</span><span class="marquee-item">D3.js</span><span class="marquee-item">Supabase</span>
+        </div>
+    </div>
+
+    <!-- Features -->
+    <section class="section reveal" id="features">
+        <div class="section-header">
+            <div class="section-tag">&#10024; Explore Everything</div>
+            <h2 class="section-title">One Platform, Endless Possibilities</h2>
+            <p class="section-desc">From developer tools to student resources â€” everything you need, crafted with precision.</p>
+        </div>
+        <div class="features-grid">
+            <a href="https://ishutools.vercel.app/" class="feature-card">
+                <span class="card-emoji">&#128295;</span>
+                <span class="card-arrow">&#8599;</span>
+                <div class="card-title">1200+ Tools</div>
+                <div class="card-desc">PDF, Image, Developer, Math, SEO, Video & 50+ categories of free online tools.</div>
+            </a>
+            <a href="/GAMES/" class="feature-card">
+                <span class="card-emoji">&#127918;</span>
+                <span class="card-arrow">&#8599;</span>
+                <div class="card-title">Games</div>
+                <div class="card-desc">Play fun browser games to relax between study sessions. No download needed.</div>
+            </a>
+            <a href="/NEWS/" class="feature-card">
+                <span class="card-emoji">&#128240;</span>
+                <span class="card-arrow">&#8599;</span>
+                <div class="card-title">News</div>
+                <div class="card-desc">Stay updated with the latest tech, education & industry news curated for you.</div>
+            </a>
+            <a href="/JOBS/" class="feature-card">
+                <span class="card-emoji">&#128188;</span>
+                <span class="card-arrow">&#8599;</span>
+                <div class="card-title">Jobs & Careers</div>
+                <div class="card-desc">Find internships, fresher jobs & career opportunities in tech and beyond.</div>
+            </a>
+            <a href="/RESOURCE/" class="feature-card">
+                <span class="card-emoji">&#128218;</span>
+                <span class="card-arrow">&#8599;</span>
+                <div class="card-title">Resources</div>
+                <div class="card-desc">Curated learning resources, notes, and reference materials for students.</div>
+            </a>
+            <a href="/BEU/" class="feature-card">
+                <span class="card-emoji">&#127891;</span>
+                <span class="card-arrow">&#8599;</span>
+                <div class="card-title">BEU Portal</div>
+                <div class="card-desc">Bihar Engineering University resources, results, and study materials.</div>
+            </a>
+            <a href="/RESULT/" class="feature-card">
+                <span class="card-emoji">&#128202;</span>
+                <span class="card-arrow">&#8599;</span>
+                <div class="card-title">Results</div>
+                <div class="card-desc">Check your exam results quickly with our fast result checker.</div>
+            </a>
+            <a href="/BLOG/" class="feature-card">
+                <span class="card-emoji">&#128221;</span>
+                <span class="card-arrow">&#8599;</span>
+                <div class="card-title">Blog</div>
+                <div class="card-desc">Read articles on tech, programming, career advice and student life.</div>
+            </a>
+            <a href="/CV/" class="feature-card">
+                <span class="card-emoji">&#128196;</span>
+                <span class="card-arrow">&#8599;</span>
+                <div class="card-title">CV Builder</div>
+                <div class="card-desc">Create professional resumes and CVs with modern templates.</div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Social -->
+    <section class="section reveal" id="social">
+        <div class="section-header">
+            <div class="section-tag">&#127760; Connect</div>
+            <h2 class="section-title">Let's Build Together</h2>
+            <p class="section-desc">Follow me on social media for updates, tips, and behind-the-scenes content.</p>
+        </div>
+        <div class="social-grid">
+            <a href="https://www.linkedin.com/in/ishu-kumar-5a0940281/" target="_blank" rel="noopener" class="social-card">
+                <div class="social-icon li">&#128101;</div>
+                <div><div class="social-name">LinkedIn</div><div class="social-handle">Ishu Kumar</div></div>
+            </a>
+            <a href="https://www.instagram.com/ishukr10" target="_blank" rel="noopener" class="social-card">
+                <div class="social-icon ig">&#128247;</div>
+                <div><div class="social-name">Instagram</div><div class="social-handle">@ishukr10</div></div>
+            </a>
+            <a href="https://www.youtube.com/@ishu-fun" target="_blank" rel="noopener" class="social-card">
+                <div class="social-icon yt">&#9654;</div>
+                <div><div class="social-name">YouTube</div><div class="social-handle">@ishu-fun</div></div>
+            </a>
+            <a href="https://x.com/ISHU_IITP" target="_blank" rel="noopener" class="social-card">
+                <div class="social-icon tw">&#120143;</div>
+                <div><div class="social-name">X (Twitter)</div><div class="social-handle">@ISHU_IITP</div></div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="/">Home</a>
+            <a href="/ABOUT/">About</a>
+            <a href="/CONTACT/">Contact</a>
+            <a href="/BLOG/">Blog</a>
+            <a href="https://ishutools.vercel.app/">Tools</a>
+        </div>
+        <p class="footer-text">&copy; 2026 ISHU. Crafted with &#10084;&#65039; by Ishu Kumar. All rights reserved.</p>
+    </footer>
+
+    <script src="main.js"></script>
 </body>
 </html>
